@@ -1,6 +1,7 @@
 import os
 import csv
 import requests
+import logging
 
 # Path to key file to configure API client
 KEY_FILE = os.environ.get('PRISMA_KEY_FILE')
@@ -11,13 +12,16 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # CSPM GLOBALS
-CSPM_BASE_URL = os.environ.get('CSPM_BASE_URL')
+CSPM_BASE_URL = os.environ.get('CSPM_BASE_URL')  # example: https://api3.prismacloud.io
+
 CSPM_TOKEN = os.environ.get('CSPM_TOKEN')
 
 
 # CWP GLOBALS
-CWP_BASE_URL = os.environ.get('CWP_BASE_URL')
+CWP_BASE_URL = os.environ.get('CWP_BASE_URL')  # example https://us-west1.cloud.twistlock.com/us-1-2345678/api/v1
 CWP_TOKEN = os.environ.get('CWP_TOKEN')
+
+log = logging.getLogger()
 
 # Get values from API key file and set KEY_ID and SECRET_KEY
 # Requires: path_to_key_file
@@ -54,25 +58,25 @@ def login_cspm():
     response = requests.request("POST", CSPM_BASE_URL+"/login", json=payload, headers=headers)
     
     if response.status_code == 200:
-        print("Login succesfull!")
+        log.debug("Login succesfull!")
         CSPM_TOKEN = response.json().get("token")
     elif response.status_code == 401:
         configure_client(KEY_FILE)
         login_cwp()
     else:
-        print("Login Error: ", response, response.text)
+        log.error("Login Error: ", response, response.text)
         exit
 
 
 # make API calls to CSPM
-def cspm_api(endpoint, request_type, querystring): 
+def cspm_api(endpoint, request_type, querystring={}, payload=None): 
     if not CSPM_TOKEN:
         login_cspm()
 
-    headers = {"x-redlock-auth": CSPM_TOKEN}
+    headers = {"authorization": CSPM_TOKEN}
 
-    response = requests.request(request_type, CSPM_BASE_URL+endpoint, headers=headers, params=querystring)
-    print("RESPONSE from %s: " % (endpoint), response, response.text, "\n")
+    response = requests.request(request_type, CSPM_BASE_URL+endpoint, headers=headers, params=querystring, json=payload)
+    #log.debug("RESPONSE from %s: " % (endpoint), response, response.text, "\n")
 
     return response
 
@@ -92,25 +96,25 @@ def login_cwp():
     response = requests.request("POST", CWP_BASE_URL+"/authenticate", json=payload, headers=headers, verify=False)
     
     if response.status_code == 200:
-        print("Login succesfull!")
+        log.debug("Login succesfull!")
         CWP_TOKEN = response.json().get("token")
     elif response.status_code == 401:
         configure_client(KEY_FILE)
         login_cwp()
     else:
-        print("Login Error: ", response, response.text)
+        log.error("Login Error: ", response, response.text)
         exit
 
 
 # make API calls to CWP (Compute)
-def cwp_api(endpoint, request_type, querystring):
-    if not CWP_TOKEN:
+def cwp_api(endpoint, request_type, querystring={}):
+    if not CWP_TOKEN: 
         login_cwp()
 
     headers = {"Authorization": "Bearer " + CWP_TOKEN}
     
     response = requests.request(request_type, CWP_BASE_URL+endpoint, headers=headers, params=querystring, verify=False)
-    print("RESPONSE from %s: " % (endpoint), response, response.text, "\n")
+    #log.debug("RESPONSE from %s: " % (endpoint), response, response.text, "\n")
 
     return response
 

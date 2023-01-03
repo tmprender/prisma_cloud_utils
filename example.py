@@ -1,16 +1,44 @@
 import prisma_utils
 import time
 
-# example of using helper methods to renew token for CWP
+
+# # # # # # # # # #
+# Example scripts #
+# # # # # # # # # #
+
+# CSPM examples
+response = prisma_utils.cspm_api(endpoint="/check", request_type="GET")
+print(response.text, "\n")
+
+
+
+# Code Security examples - uses CSPM API URL
+response = prisma_utils.cspm_api("/code/api/v1/repositories", "GET")
+repos = response.json()
+print(repos, "\n")
+for repo in repos:
+    payload = {"repository": repo["owner"] +"/"+ repo["repository"], "sourceTypes": [ repo["source"] ]}
+    response = prisma_utils.cspm_api("/code/api/v1/errors/files", "POST", {}, payload)  # {} = empty QueryString positional arg
+    print(response.text, response, "\n")
+
+
+# CWP examples
+response = prisma_utils.cwp_api("/images", "GET", querystring={"sort":"scanTime"})
+# curl equivalent -> curl -k -H "Authorization: Bearer $CWP_TOKEN" -X GET $CWP_BASE_URL/api/v1/images?sort="scanTime"
+
+# use a helper methods to renew token for CWP
 def renew_cwp_token():
-    #print("TOKEN BEFORE: ", prisma_utils.CWP_TOKEN)
     response = prisma_utils.cwp_api(endpoint="/authenticate/renew", request_type="GET", querystring={})
-    # update runtime variable - classless, only updates for running process
+    # update runtime variable - only updates for running process, not persistent on OS/shell env var
     prisma_utils.CWP_TOKEN = response.json().get("token")
 
-# example script
-prisma_utils.cwp_api("/hosts", "GET", {})
-prisma_utils.cspm_api("/cloud", "GET", {})
-time.sleep(120)  # simulate delay between API calls
+print("doing some analysis...")
+time.sleep(5)  # simulate delay, token nearing expiration...
+print("refreshing token")
 renew_cwp_token()
-prisma_utils.cwp_api("/defenders", "GET", {})
+
+# formatting examples
+querystring = {"timeType":"relative", "timeAmount": "24", "timeUnit": "hour"}
+response = prisma_utils.cwp_api("/images", "GET", querystring)
+print(response.text)
+
