@@ -62,7 +62,7 @@ def login_cspm():
         CSPM_TOKEN = response.json().get("token")
     elif response.status_code == 401:
         configure_client(KEY_FILE)
-        login_cwp()
+        login_cspm()
     else:
         log.error("Login Error: ", response, response.text)
         exit
