@@ -1,3 +1,5 @@
+# Markdown syntax guide
+
 # Prisma Cloud API Utils
 *Helper Methods and Example Code for getting started with Prisma Cloud APIs*
 
@@ -9,11 +11,11 @@
   and/or
   * **CWP_BASE_URL** `export CWP_BASE_URL=https://us-west1.cloud.twistlock.com/us-1-2345678`
 
-* Set the following required environment variable(s) for auth: 
-  * **KEY_FILE** (string) a file path to Prisma Cloud API key file in .csv format `/path/to/file`
+* Set the file path to Prisma Cloud API creds (.csv file downloaded from management cosole): 
+  * **PRISMA_KEY_FILE** `export PRISMA_KEY_FILE=/full/path/to/cred_file.csv`
 
-  or
-  * **KEY_ID** (string) and **SECRET_KEY** (string) sourced from API Key File
+  
+  * Optionally set **KEY_ID**  and **SECRET_KEY** directly instead of reading from key file
 
 * Use the helper methods to authenticate (login/renew) to Prisma Cloud and retreive an API Token
 
