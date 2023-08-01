@@ -95,7 +95,7 @@ def cspm_renew(token=None):
 ###############################################################################################################################
 
 # CWP GLOBALS
-CWP_BASE_URL = os.environ.get('CWP_BASE_URL')  # example https://us-west1.cloud.twistlock.com/us-1-2345678/api/v1
+CWP_BASE_URL = os.environ.get('CWP_BASE_URL')  # example https://us-west1.cloud.twistlock.com/us-1-2345678
 CWP_TOKEN = os.environ.get('CWP_TOKEN')  # not required, redundant if KEY_FILE or KEY_ID + SECRET_KEY are configured
 
 # Log into CWP (Compute)
