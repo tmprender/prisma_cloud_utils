@@ -1,5 +1,3 @@
-# Markdown syntax guide
-
 # Prisma Cloud API Utils
 *Helper Methods and Example Code for getting started with Prisma Cloud APIs*
 
