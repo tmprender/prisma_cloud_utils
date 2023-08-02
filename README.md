@@ -1,5 +1,3 @@
-# Markdown syntax guide
-
 # Prisma Cloud API Utils
 *Helper Methods and Example Code for getting started with Prisma Cloud APIs*
 
@@ -25,9 +23,9 @@
 
 `export CWP_TOKEN=$(python login_cwp.py)`
 
-* Auth and renew within python script by importing 
+* Auth and renew within python script by importing (clone and install with pip)
 ``` 
-import prisma_utils
+from primsa_utils import prisma_utils
 
 TOKEN = prisma_utils.cspm_login()
 # make some API calls ... iterate over results ... minutes go by ... 
