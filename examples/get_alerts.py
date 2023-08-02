@@ -1,11 +1,10 @@
-import prisma_utils
+from prisma_utils import prisma_utils
 import json
-import time
 import os
 import requests
 
 BASE_URL = os.environ.get("BASE_URL") # optional / local override of CSPM_BASE_URL and/or CWP_BASE_URL in prisma_utils
-TOKEN = os.environ.get("TOKEN")
+TOKEN = prisma_utils.cspm_login()
 
 # Get CSPM alerts using POST /v2/alerts, example contains filters and timerange
 
@@ -27,7 +26,7 @@ payload = {
     "timeRange": {
         "type": "relative",
         "value": {
-            "amount": 1,
+            "amount": 90,
             "unit": "day"
         }
     }

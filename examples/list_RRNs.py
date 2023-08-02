@@ -1,4 +1,4 @@
-import prisma_utils
+from prisma_utils import prisma_utils
 import os
 import requests
 import time
