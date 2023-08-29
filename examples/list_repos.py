@@ -17,7 +17,7 @@ print(response, response.text)
 
 repos = response.json()
 
-# iterte over repos and find violations within
+# iterate over repos and find violations within
 for repo in repos:
     # format components of previous respone for required format of next logical request - silly API...
     payload = {"repository": repo["owner"] +"/"+ repo["repository"], "sourceTypes": [ repo["source"] ]}

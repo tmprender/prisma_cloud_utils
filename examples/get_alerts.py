@@ -15,21 +15,26 @@ headers = {
 }
 
 payload = {
-    "detailed": "true",
-    "filters": [
-        {
-            "name": "alert.status",
-            "operator": "=",
-            "value": "resolved"
-        }
+    "detailed": "false",
+    "sortBy": [
+        "resource.id"
     ],
+    "offset": 2000,
+    "limit": 2000,
     "timeRange": {
         "type": "relative",
         "value": {
             "amount": 90,
             "unit": "day"
         }
-    }
+    },
+    "filters": [
+        {
+            "name": "timeRange.type",
+            "operator": "=",
+            "value": "ALERT_UPDATED"
+        }
+    ]
 }
 
 response = requests.request("POST", BASE_URL+"/v2/alert", headers=headers, data=json.dumps(payload)) # or use json=payload
