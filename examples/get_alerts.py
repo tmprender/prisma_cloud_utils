@@ -17,8 +17,9 @@ headers = {
 payload = {
     "detailed": "false",
     "sortBy": [
-        "resource.id"
+        "resource.id",
     ],
+    "fields": ["vulnerability"],
     "offset": 2000,
     "limit": 2000,
     "timeRange": {
@@ -33,14 +34,24 @@ payload = {
             "name": "timeRange.type",
             "operator": "=",
             "value": "ALERT_UPDATED"
+        },
+        {
+            "name": "policy.severity",
+            "operator": "=",
+            "value": "high"
+        },
+        {
+            "name": "policy.severity",
+            "operator": "=",
+            "value": "critical"
         }
     ]
 }
 
 response = requests.request("POST", BASE_URL+"/v2/alert", headers=headers, data=json.dumps(payload)) # or use json=payload
 
-print(response, response.text)
+print(response.text)
 
-alerts = response.json()
-print(alerts)
+# alerts = response.json()
+# print(alerts)
 
