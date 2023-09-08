@@ -3,6 +3,9 @@ import csv
 import requests
 import logging
 import sys
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Path to key file to configure API client - required unless KEY_ID and SECRET_KEY is set
 KEY_FILE = os.environ.get('PRISMA_KEY_FILE')
