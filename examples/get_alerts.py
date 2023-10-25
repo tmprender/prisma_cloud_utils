@@ -33,18 +33,8 @@ payload = {
         {
             "name": "timeRange.type",
             "operator": "=",
-            "value": "ALERT_UPDATED"
+            "value": "ALERT_STATUS_UPDATED"
         },
-        {
-            "name": "policy.severity",
-            "operator": "=",
-            "value": "high"
-        },
-        {
-            "name": "policy.severity",
-            "operator": "=",
-            "value": "critical"
-        }
     ]
 }
 
