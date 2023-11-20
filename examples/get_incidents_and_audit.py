@@ -7,7 +7,7 @@ import urllib3
 # stop no cert warning
 urllib3.disable_warnings()
 
-BASE_URL = os.environ.get("BASE_URL") # optional / local override of CSPM_BASE_URL and/or CWP_BASE_URL in prisma_utils
+BASE_URL = os.environ.get("CWP_BASE_URL") # optional / local override of CSPM_BASE_URL and/or CWP_BASE_URL in prisma_utils
 TOKEN = prisma_utils.cwp_login()
 
 # list images from Prisma Cloud Compute (CWP/Twistlock)

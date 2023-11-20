@@ -43,16 +43,13 @@ def read_key_file(key_file):
 
 # CSPM GLOBALS
 CSPM_BASE_URL = os.environ.get('CSPM_BASE_URL')  # example: https://api3.prismacloud.io
-CSPM_TOKEN = os.environ.get('CSPM_TOKEN')  # not required, redundant if KEY_FILE or KEY_ID + SECRET_KEY are configured
+CSPM_TOKEN = os.environ.get('CSPM_TOKEN')  # not required to set, redundant if KEY_FILE or KEY_ID + SECRET_KEY are configured
 
 # Log into CSPM (includes Code Security)
 # Requires: KEY_ID and SECRET_KEY. 
 # Function returns short-lived JWT and sets value of CSPM_TOKEN
 def cspm_login(key_id=None, secret=None):
     global KEY_ID, SECRET_KEY, CSPM_TOKEN
-
-    KEY_ID = key_id
-    SECRET_KEY = secret
 
     if not KEY_ID or not SECRET_KEY:
         read_key_file(KEY_FILE)
