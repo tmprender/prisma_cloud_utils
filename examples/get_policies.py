@@ -11,7 +11,7 @@ headers = {
   'x-redlock-auth': TOKEN
 }
 
-# list all integrated code repositories
+# list all platform policies
 response = requests.request("GET", BASE_URL+"/policy", headers=headers, data={})
 #print(response, response.text)
 
