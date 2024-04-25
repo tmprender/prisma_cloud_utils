@@ -11,7 +11,7 @@ load_dotenv()
 KEY_FILE = os.environ.get('PRISMA_KEY_FILE')
 
 # SaaS Tenant API Key - required unless KEY_FILE is set
-KEY_ID = os.environ.get('KEY_ID')
+KEY_ID = os.environ.get('ACCESS_KEY_ID')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # Enable logging here as needed
