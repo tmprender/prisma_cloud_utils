@@ -7,7 +7,7 @@
 
 `pip install prisma_cloud_utils/` 
 
-`pip install prisma_cloud_utils/` 
+`pip install -r prisma_cloud_utils/requirements.txt` 
 
 ## Usage
 
