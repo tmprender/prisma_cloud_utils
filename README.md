@@ -1,6 +1,14 @@
 # Prisma Cloud API Utils
 *Helper Methods and Example Code for getting started with Prisma Cloud APIs*
 
+## Setup
+
+`git clone https://github.com/tmprender/prisma_cloud_utils.git`
+
+`pip install prisma_cloud_utils/` 
+
+`pip install prisma_cloud_utils/` 
+
 ## Usage
 
 * Set the base URL for Prisma Cloud API (NOTE: both can be set):
