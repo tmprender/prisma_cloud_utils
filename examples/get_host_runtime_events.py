@@ -15,5 +15,6 @@ TOKEN = prisma_utils.cwp_login()
 headers = {'Accept': 'application/json', "Authorization": "Bearer " + TOKEN}
 querystring = {"sort":"scanTime", "timeType":"relative", "timeAmount": "1", "timeUnit": "day"}
 
-response = requests.request("GET", BASE_URL+"/api/v1/images", headers=headers, params=querystring, verify=False)
-print(response, response.text)
+response = requests.request("GET", BASE_URL+"/api/v1/audits/runtime/host", headers=headers, params=querystring, verify=False)
+print(response.text)
+#print(response, response.text)

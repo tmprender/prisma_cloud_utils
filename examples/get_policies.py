@@ -15,18 +15,17 @@ headers = {
 response = requests.request("GET", BASE_URL+"/policy", headers=headers, data={})
 #print(response, response.text)
 
-policies = response.json()
+policies = response.text
 
-#print(policies)
+print(policies)
 
-pc_ckv = []
-# find PC policies that map to checkov policies
-for policy in policies:
-    if policy['rule'].get('children') is not None:
-        for child in policy['rule']['children']:
-          if child.get("metadata").get("checkovId"):
-              pc_ckv.append( {"policyId": policy['policyId'], "name": policy['name'], "checkovId": child['metadata']['checkovId']})
+# pc_ckv = []
+# # find PC policies that map to checkov policies
+# for policy in policies:
+#     if policy['rule'].get('children') is not None:
+#         for child in policy['rule']['children']:
+#           if child.get("metadata").get("checkovId"):
+#               pc_ckv.append( {"policyId": policy['policyId'], "name": policy['name'], "checkovId": child['metadata']['checkovId']})
 
-print("TOTAL: ", len(pc_ckv), "\n", json.dumps(pc_ckv))
-
+# print("TOTAL: ", len(pc_ckv), "\n", json.dumps(pc_ckv))
 

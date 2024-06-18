@@ -3,7 +3,7 @@ import json
 import os
 import requests
 
-BASE_URL = os.environ.get("BASE_URL") # optional / local override of CSPM_BASE_URL and/or CWP_BASE_URL in prisma_utils
+BASE_URL = os.environ.get("CSPM_BASE_URL") # optional / local override of CSPM_BASE_URL and/or CWP_BASE_URL in prisma_utils
 TOKEN = prisma_utils.cspm_login()
 
 # Get CSPM alerts using POST /v2/alerts, example contains filters and timerange

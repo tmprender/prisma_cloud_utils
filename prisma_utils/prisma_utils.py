@@ -3,14 +3,15 @@ import csv
 import requests
 import logging
 import sys
+import json
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# Path to key file to configure API client - required unless KEY_ID and SECRET_KEY is set
+# Path to key file to configure API client - required unless KEY_ID and SECRET_KEY are set
 KEY_FILE = os.environ.get('PRISMA_KEY_FILE')
 
-# SaaS Tenant API Key - required unless KEY_FILE is set
+# API Key (username and password for CWP) - required unless KEY_FILE is set
 KEY_ID = os.environ.get('ACCESS_KEY_ID')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
@@ -48,14 +49,15 @@ CSPM_TOKEN = os.environ.get('CSPM_TOKEN')  # not required to set, redundant if K
 # Log into CSPM (includes Code Security)
 # Requires: KEY_ID and SECRET_KEY. 
 # Function returns short-lived JWT and sets value of CSPM_TOKEN
-def cspm_login(key_id=None, secret=None):
+def cspm_login(key_id=None, secret_key=None):
     global KEY_ID, SECRET_KEY, CSPM_TOKEN
+    if key_id and secret_key:
+        KEY_ID, SECRET_KEY = key_id, secret_key
 
     if not KEY_ID or not SECRET_KEY:
         read_key_file(KEY_FILE)
 
     headers = {"content-type": "application/json; charset=UTF-8"}
-    
     payload = {"username": KEY_ID, "password": SECRET_KEY}
 
     response = requests.request("POST", CSPM_BASE_URL+"/login", headers=headers, json=payload)
@@ -108,11 +110,11 @@ def cwp_login():
         read_key_file(KEY_FILE)
 
 
-    headers = {"content-type": "application/json; charset=UTF-8"}
+    headers = {'Accept': 'application/json'}
     payload = {"username": KEY_ID, "password": SECRET_KEY}
     
     response = requests.request("POST", CWP_BASE_URL+"/api/v1/authenticate", headers=headers, json=payload, verify=False)
-    
+
     if response.status_code == 200:
         #log.debug("Login succesfull!")
         CWP_TOKEN = response.json().get("token")
